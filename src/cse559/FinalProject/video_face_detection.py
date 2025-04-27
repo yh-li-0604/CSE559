@@ -1,8 +1,16 @@
 import face_recognition
 import cv2
+import os
+
+os.chdir(os.path.dirname(__file__))
+print("Current working directory: ", os.getcwd())
 
 webcam_video_stream = cv2.VideoCapture('videos/test_video.mp4')
 
+if not webcam_video_stream.isOpened():
+    print("Error: Could not open video file.")
+    exit()
+    
 all_face_locations = []
 
 while True:

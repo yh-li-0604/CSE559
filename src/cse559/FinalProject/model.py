@@ -1,51 +1,126 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import (
+    Conv2D, MaxPooling2D, AveragePooling2D,
+    Flatten, Dense, Dropout
+)
 
-class facial_expressionCNN(nn.Module):
-    """
-    PyTorch model for real-time facial expression CNN.
-    Input: 1×48×48  ──► 7-class soft-max.
-    """
-    def __init__(self, n_classes: int = 7):
-        super().__init__()
+def build_cnn_model():
+    variance_scaling = tf.keras.initializers.VarianceScaling(
+        scale=1.0,
+        mode='fan_avg',
+        distribution='uniform',
+        seed=None
+    )
+    
+    zeros_initializer = tf.keras.initializers.Zeros()
 
-        self.features = nn.Sequential(
-            # Block 1
-            nn.Conv2d(1, 64, kernel_size=5, stride=1, padding=0),  # valid
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=5, stride=2),                 # valid
+    model = Sequential(name="Sequential")
 
-            # Block 2
-            nn.Conv2d(64, 64, kernel_size=3),
-            nn.ReLU(inplace=True),
+    model.add(Conv2D(
+        filters=64,
+        kernel_size=(5, 5),
+        strides=(1, 1),
+        activation='relu',
+        padding='valid',
+        data_format='channels_last',
+        use_bias=True,
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        input_shape=(48, 48, 1), 
+        name='conv2d_1'
+    ))
 
-            # Block 3
-            nn.Conv2d(64, 64, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.AvgPool2d(kernel_size=3, stride=2),
+    model.add(MaxPooling2D(
+        pool_size=(5, 5),
+        strides=(2, 2),
+        padding='valid',
+        data_format='channels_last',
+        name='max_pooling2d_1'
+    ))
 
-            # Block 4
-            nn.Conv2d(64, 128, kernel_size=3),
-            nn.ReLU(inplace=True),
+    model.add(Conv2D(
+        filters=64,
+        kernel_size=(3, 3),
+        activation='relu',
+        padding='valid',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='conv2d_2'
+    ))
 
-            # Block 5
-            nn.Conv2d(128, 128, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.AvgPool2d(kernel_size=3, stride=2)                  # output 128×1×1
-        )
+    model.add(Conv2D(
+        filters=64,
+        kernel_size=(3, 3),
+        activation='relu',
+        padding='valid',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='conv2d_3'
+    ))
 
-        self.classifier = nn.Sequential(
-            nn.Flatten(),               # 128
-            nn.Linear(128, 1024),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.2),
-            nn.Linear(1024, 1024),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.2),
-            nn.Linear(1024, n_classes)
-        )
+    model.add(AveragePooling2D(
+        pool_size=(3, 3),
+        strides=(2, 2),
+        padding='valid',
+        name='average_pooling2d_1'
+    ))
 
-    def forward(self, x):
-        x = self.features(x)
-        return self.classifier(x)
+    model.add(Conv2D(
+        filters=128,
+        kernel_size=(3, 3),
+        activation='relu',
+        padding='valid',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='conv2d_4'
+    ))
+
+    model.add(Conv2D(
+        filters=128,
+        kernel_size=(3, 3),
+        activation='relu',
+        padding='valid',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='conv2d_5'
+    ))
+
+    model.add(AveragePooling2D(
+        pool_size=(3, 3),
+        strides=(2, 2),
+        padding='valid',
+        name='average_pooling2d_2'
+    ))
+
+    model.add(Flatten(name='flatten_1'))
+
+    model.add(Dense(
+        units=1024,
+        activation='relu',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='dense_1'
+    ))
+
+    model.add(Dropout(rate=0.2, name='dropout_1'))
+
+    model.add(Dense(
+        units=1024,
+        activation='relu',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='dense_2'
+    ))
+
+    model.add(Dropout(rate=0.2, name='dropout_2'))
+
+    model.add(Dense(
+        units=7,
+        activation='softmax',
+        kernel_initializer=variance_scaling,
+        bias_initializer=zeros_initializer,
+        name='dense_3'
+    ))
+
+    return model

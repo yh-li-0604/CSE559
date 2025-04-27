@@ -1,8 +1,12 @@
 import face_recognition
 import cv2
-from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.preprocessing import image
 from keras.models import model_from_json
 import numpy as np
+import os
+
+os.chdir(os.path.dirname(__file__))
+print("Current working directory: ", os.getcwd())
 
 webcam_video_stream = cv2.VideoCapture(1)
 
