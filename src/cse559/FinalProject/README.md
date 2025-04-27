@@ -53,7 +53,7 @@ python retina_face_detection.py
 ```
 
 ### Example — Detection Result
-![Face Detection Example](images/example.png)
+![Face Detection Example](images/example1.png)
 
 ---
 
@@ -66,6 +66,10 @@ For expression classification we use:
 
 The model is trained for **50 epochs** on **FER-2013**.  
 Training logs and evaluation are in **`test.ipynb`**.
+
+### Example — Estimation Result
+![Face Detection Example](images/example2.png)
+
 
 ---
 

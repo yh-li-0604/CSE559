@@ -11,7 +11,7 @@ from retinaface import RetinaFace
 os.chdir(os.path.dirname(__file__))
 print("Current working directory: ", os.getcwd())
 
-webcam_video_stream = cv2.VideoCapture("videos/test_video.mp4")
+webcam_video_stream = cv2.VideoCapture("videos/test02.mp4")
 
 # face_exp_model = model_from_json(open("models/facial_expression_model_structure.json", "r").read())
 # face_exp_model.load_weights('models/facial_expression_model_weights.h5')

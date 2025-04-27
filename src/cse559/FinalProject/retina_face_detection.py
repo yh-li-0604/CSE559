@@ -7,7 +7,7 @@ os.chdir(os.path.dirname(__file__))
 print("Current working directory:", os.getcwd())
 
 # Load video
-webcam_video_stream = cv2.VideoCapture('videos/test_video.mp4')
+webcam_video_stream = cv2.VideoCapture('videos/test02.mp4')
 
 if not webcam_video_stream.isOpened():
     print("Error: Could not open video file.")
