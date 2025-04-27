@@ -24,6 +24,7 @@ dependencies = [
     "tensorflow>=2.19.0",
     "keras>=3.9.2",
     "retina-face>=0.0.17",
+    "tf-keras>=2.19.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

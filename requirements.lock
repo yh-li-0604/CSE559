@@ -246,8 +246,11 @@ tensorboard-data-server==0.7.2
 tensorflow==2.19.0
     # via cse559
     # via retina-face
+    # via tf-keras
 termcolor==3.0.1
     # via tensorflow
+tf-keras==2.19.0
+    # via cse559
 threadpoolctl==3.6.0
     # via scikit-learn
 tifffile==2025.3.13
