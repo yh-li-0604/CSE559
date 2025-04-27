@@ -53,7 +53,7 @@ python retina_face_detection.py
 ```
 
 ### Example — Detection Result
-![Face Detection Example](src/cse559/FinalProject/images/results.png)
+![Face Detection Example](src/cse559/FinalProject/images/result.png)
 
 ---
 
