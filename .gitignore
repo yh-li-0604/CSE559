@@ -11,3 +11,9 @@ wheels/
 *.pt 
 
 *data
+HW4
+HW5
+HW6
+*.json
+
+*runs
