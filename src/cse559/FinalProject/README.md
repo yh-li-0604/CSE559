@@ -15,12 +15,19 @@ Given a detected face, our model classifies the expression (e.g., happy, sad).
 **Evaluation:**
 - **Face Detection:** We evaluate whether all faces in each frame are correctly detected and blurred.
 - **Facial Expression Recognition:** We evaluate using classification metrics such as accuracy and precision. (See `test.ipynb` for detailed evaluation.)
-
 ---
 
 ## Environment Setup
 
 The project environment is managed using **rye** or **uv**.
+
+**Clone the Repository**
+
+First, clone the repository:
+
+```bash
+git clone https://github.com/yh-li-0604/CSE559.git
+```
 
 **Preparation Steps:**
 1. Install **CMake** on your machine (required for compiling `dlib & face-recognition`).
